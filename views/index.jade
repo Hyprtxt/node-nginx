@@ -3,4 +3,13 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  pre=JSON.stringify( files, null, 2 )
+  pre=JSON.stringify( data, null, 2 )
+	table.table
+		th
+			td Enabled
+			td Available
+		tr
+		each site, idx in data.available
+			td=site
+			td=data.enabled[idx]
+  data
