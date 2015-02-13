@@ -11,7 +11,7 @@ router.get('/', function ( req, res ) {
 		pileodata.enabled = files;
 		glob("*", { cwd: '/etc/nginx/sites-available' }, function ( er, files ) {
 			pileodata.available = files;
-			res.render('index', { title: 'Nginx Sites Config', files: pileodata });
+			res.render('index', { title: 'Nginx Sites Config', data: pileodata });
 		})
 	})
 });

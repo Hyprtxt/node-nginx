@@ -10,5 +10,6 @@ block content
 			th Available
 		tr
 		each site, idx in data.available
-			td=site
-			td=data.enabled[idx]
+			tr
+				td=site
+				td=data.enabled[idx]
