@@ -20,33 +20,26 @@ router.get('/ln', function ( req, res ) {
 	var pileodata = {};
 	glob("*", { cwd: '/etc/nginx/sites-available' }, function ( er, sites_available ) {
 		glob("*", { cwd: '/etc/nginx/sites-enabled' }, function ( er, sites_enabled ) {
-			pileodata.good = [];
-			pileodata.notgood = [];
+			pileodata.symlinked = [];
+			pileodata.notsymlinked = [];
 			_.forEach( sites_available, function ( v, i ) {
-				console.log( v )
 				if( _.includes( sites_enabled, v ) ) {
-					pileodata.good.push( v );
+					pileodata.symlinked.push( v );
 				}
 				else {
-					pileodata.notgood.push( v );
+					pileodata.notsymlinked.push( v );
 				}
-			})
+			});
+			pileodata.tomove = [];
+			_.forEach( sites_enabled, function ( v, i ) {
+				if( !_.includes( sites_available, v ) ) {
+					pileodata.tomove.push( v );
+				}
+			});
 			pileodata.available = sites_available;
-			pileodata.enabled = sites_enabled;
-			res.render('index', { title: 'Nginx Sites Config', files: pileodata });
+			pileodata.enabled = sites_enabled;x
+			res.render('index', { title: 'Nginx Sites Config', data: pileodata });
 		})
-	})
-});
-
-router.get('/enabled', function ( req, res ) {
-	glob("*", { cwd: '/etc/nginx/sites-enabled' }, function ( er, files ) {
-		res.render('index', { title: 'Sites Enabled', files: files });
-	})
-});
-
-router.get('/available', function ( req, res ) {
-	glob("*", { cwd: '/etc/nginx/sites-available' }, function ( er, files ) {
-		res.render('index', { title: 'Sites Available', files: files });
 	})
 });
 
