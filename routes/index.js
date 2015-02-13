@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var _ = require('lodash');
 var glob = require('glob');
 
 /* GET home page. */
