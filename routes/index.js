@@ -16,6 +16,28 @@ router.get('/', function ( req, res ) {
 	})
 });
 
+router.get('/ln', function ( req, res ) {
+	var pileodata = {};
+	glob("*", { cwd: '/etc/nginx/sites-available' }, function ( er, sites_available ) {
+		glob("*", { cwd: '/etc/nginx/sites-enabled' }, function ( er, sites_enabled ) {
+			pileodata.good = [];
+			pileodata.notgood = [];
+			_.forEach( sites_available, function ( v, i ) {
+				console.log( v )
+				if( _.includes( sites_enabled, v ) ) {
+					pileodata.good.push( v );
+				}
+				else {
+					pileodata.notgood.push( v );
+				}
+			})
+			pileodata.available = sites_available;
+			pileodata.enabled = sites_enabled;
+			res.render('index', { title: 'Nginx Sites Config', files: pileodata });
+		})
+	})
+});
+
 router.get('/enabled', function ( req, res ) {
 	glob("*", { cwd: '/etc/nginx/sites-enabled' }, function ( er, files ) {
 		res.render('index', { title: 'Sites Enabled', files: files });

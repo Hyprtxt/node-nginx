@@ -5,9 +5,9 @@ block content
 	p Welcome to #{title}
 	pre=JSON.stringify( data, null, 2 )
 	table.table
-		th
-			td Enabled
-			td Available
+		tr
+			th Enabled
+			th Available
 		tr
 		each site, idx in data.available
 			td=site
