@@ -57,6 +57,11 @@ module.exports.routes = {
     action: 'siteCreate'
   },
 
+  'get /site/delete/:site': { 
+    controller: 'sites',
+    action: 'siteDelete'
+  },
+
   'get /site/read/:site': { 
     controller: 'sites',
     action: 'siteRead'

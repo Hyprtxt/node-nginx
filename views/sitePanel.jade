@@ -16,7 +16,11 @@ block body
 						th Root Directory
 				tbody
 					tr
-						td=port
-						td=root
-			p good
-			p=nginx_config
+						td=data.port
+						td=data.root
+			p.strong Nginx Config
+			pre=data.nginx_config
+
+			p=url
+
+			a.btn.btn-danger(href='/site/delete/'+data.url) Delete site

@@ -12,8 +12,26 @@ var exec = child.exec;
 var spawn = child.spawn;
 var fs = require('fs');
 
-preWrap = function( thing ) {
+var preWrap = function( thing ) {
 	return '<pre>' + thing + '</pre>';
+}
+
+var getPort = function ( data ) {
+	if ( port = data.match(/\:\d\d\d\d/) ) {
+		return port.toString().replace(':','');
+	}
+	else {
+		return false;
+	}
+}
+
+var getRoot = function ( data ) {
+	if ( root = data.match(/root\ .*\;/) ) {
+		return root.toString().replace('root ','').replace(';','');
+	}
+	else {
+		return false;
+	}
 }
 
 module.exports = {
@@ -25,19 +43,12 @@ module.exports = {
 	renderSite: function ( req, res ) {
 		fs.readFile( sails.config.nginx_path + '/sites-available/' + req.param('site'), 'utf8', function ( err, data ) {
 			if (err) throw err;
-			var data1 = data;
-			var data2 = data;
-			var data3 = data;
+			data = data.toString();
 			var view_data = {};
-			if ( config = data3.match(/.*/) ) {
-				view_data.nginx_config = config.toString();
-			}
-			if ( port = data1.match(/\:\d\d\d\d/) ) {
-				view_data.port = port.toString().replace(':','');
-			}
-			if ( root = data2.match(/root\ .*\;/) ) {
-				view_data.root = root.toString().replace('root ','').replace(';','');
-			}
+			view_data.nginx_config = data;
+			view_data.port = getPort( data );
+			view_data.root = getRoot( data );
+			view_data.url = req.param('site');
 			console.log( view_data );
 			res.view('sitePanel', {
 				title: 'Site Manager',
@@ -174,7 +185,31 @@ module.exports = {
 			response.push('child process exited with code ' + code);
 			res.send( preWrap( JSON.stringify( response ) ) );
 		});
-	}
+	},
 
+	siteDelete: function ( req, res ) {
+		if ( req.param('site') != undefined ) {
+			response = [];
+			path = sails.config.nginx_path + '/sites-available/' + req.param('site');
+			test = spawn('rm', [path], { uid: 0 });
+
+			test.stdout.on('data', function (data) {
+				console.log('stdout: ' + data);
+				response.push('stdout: ' + data);
+			});
+
+			test.stderr.on('data', function (data) {
+				console.log('stderr: ' + data);
+				response.push('stderr: ' + data);
+			});
+
+			test.on('close', function (code) {
+				console.log('child process exited with code ' + code);
+				response.push('child process exited with code ' + code);
+				// res.send( preWrap( JSON.stringify( response ) ) );
+				res.redirect('/');
+			});
+		}
+	}
 };
 
