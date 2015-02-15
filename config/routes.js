@@ -32,14 +32,14 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /login' : {
-    controller : 'auth',
-    action     : 'index'
+  'get /login': {
+    controller: 'auth',
+    action: 'index'
   },
 
-  'get /logout' : {
-    controller : 'auth',
-    action     : 'logout'
+  'get /logout': {
+    controller: 'auth',
+    action: 'logout'
   },
 
   'get /': {
@@ -48,37 +48,37 @@ module.exports.routes = {
   },
 
   'get /site/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'renderSite'
   },
 
   'get /site/create/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'siteCreate'
   },
 
   'get /site/read/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'siteRead'
   },
   
   'get /site/port/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'sitePort'
   },
 
   'get /site/root/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'siteRoot'
   },
 
   'get /symlink/create/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'symlinkCreate'
   },
 
   'get /symlink/remove/:site': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'symlinkRemove'
   },
 
@@ -88,17 +88,17 @@ module.exports.routes = {
   },
 
   'get /nginx/test': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'nginxTest'
   },
 
   'get /nginx/reload': { 
-    controller: 'SitesController',
+    controller: 'sites',
     action: 'nginxReload'
   },
 
   // 'get /nginx/config/edit/:site': { 
-  //   controller: 'SitesController',
+  //   controller: 'sites',
   //   action: 'nginxEditConfig'
   // }
 
