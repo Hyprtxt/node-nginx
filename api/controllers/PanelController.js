@@ -34,7 +34,6 @@ module.exports = {
 		getNginxData( function ( data ) {
 			return res.view('controlPanel', {
 				title: 'Nginx Manager',
-				GAID: 'SOMETHING',
 				data: data
 			});
 		});
