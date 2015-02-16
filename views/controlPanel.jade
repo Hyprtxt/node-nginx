@@ -7,6 +7,7 @@ block body
 			h1= title
 			p Welcome to #{title}
 
+			h3 Not on this Server
 			pre=JSON.stringify( data.cloudflare_only )
 
 		.col-md-12
@@ -21,6 +22,7 @@ block body
 						th Files
 						th Config
 						th Manage
+						th Pagespeed
 				tbody
 					each site in data
 						tr
@@ -47,6 +49,9 @@ block body
 								a.btn.btn-info(href="/site/read/"+site.name) View Config
 							td
 								a.btn.btn-info(href="/site/"+site.name) Manage Site
+							td
+								p Pagespeed
+								div(id='speed_'+site.name)
 		.col-md-6
 			h2 Nginx Manager
 			ul
