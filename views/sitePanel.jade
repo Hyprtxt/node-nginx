@@ -14,10 +14,12 @@ block body
 					tr
 						th Port
 						th Root Directory
+						th Cloudflare
 				tbody
 					tr
 						td=data.port
 						td=data.root
+						td=data.cloudflare_enabled
 			p.strong Nginx Config
 			pre=data.nginx_config
 

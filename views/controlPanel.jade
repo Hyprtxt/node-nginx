@@ -7,6 +7,8 @@ block body
 			h1= title
 			p Welcome to #{title}
 
+			pre=JSON.stringify( data.cloudflare_only )
+
 		.col-md-12
 			h2 The Sites
 			table.table.table-striped
@@ -15,6 +17,7 @@ block body
 						th URL
 						th Status
 						th Symlink
+						th Cloudflare
 						th Files
 						th Config
 						th Manage
@@ -33,6 +36,11 @@ block body
 									p Enabled
 								td
 									a.btn.btn-warning(href="/symlink/remove/"+site.name) Disable
+							if site.cloudflare_enabled
+								td
+									a.btn.btn-info(href="https://www.cloudflare.com/dns-settings?z="+site.name) Manage DNS
+							else
+								td &nbsp;
 							td
 								a.btn.btn-primary(href="//files.hyprtxt.com/"+site.name) Files
 							td

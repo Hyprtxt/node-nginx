@@ -8,6 +8,7 @@
 var _ = require('lodash');
 var glob = require('glob');
 var exec = require('child_process').exec;
+var cloudflare = require('cloudflare').createClient(sails.config.cloudflare);
 
 var getNginxData = function ( callback ) {
 	var sites = {};
@@ -24,7 +25,30 @@ var getNginxData = function ( callback ) {
 					site.nginx_enabled = false;
 				}
 			});
-			callback( sites );
+			//*
+			// CLOUDFLARE DATA
+			//*
+			// List all available domains
+			cloudflare.listDomains(function (err, domains) {
+				sites.cloudflare = domains;
+				var cloudflare_only = _.map( domains, 'display_name');
+				if (err) throw err;
+				_.each( sites, function ( site ) {
+					if( _.includes( _.map( domains, 'display_name'), site.name ) ) {
+						site.cloudflare_enabled = true;
+						var index = cloudflare_only.indexOf( site.name );
+						if (index > -1) {
+							cloudflare_only.splice(index, 1);
+						}
+						delete cloudflare_only[site.name];
+					}
+					else {
+						site.cloudflare_enabled = false;
+					}
+				});
+				sites.cloudflare_only = cloudflare_only;
+				callback( sites );
+			});
 		});
 	});
 }

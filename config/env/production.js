@@ -12,9 +12,6 @@
 
 module.exports = {
 
-  web_path: '/var/www',
-  nginx_path: '/etc/nginx',
-
   /***************************************************************************
    * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *
