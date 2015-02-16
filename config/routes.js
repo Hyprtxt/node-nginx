@@ -32,6 +32,11 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'post /githook': {
+    controller: 'git',
+    action: 'gitPost'
+  }
+
   'get /login': {
     controller: 'auth',
     action: 'index'
