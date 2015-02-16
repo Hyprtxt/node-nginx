@@ -22,10 +22,62 @@ block body
 						td=data.cloudflare_enabled
 			p.strong Nginx Config
 			pre=data.nginx_config
-
 			p=url
-
 			a.btn.btn-danger(href='/site/delete/'+data.url) Delete site
+
+		if data.cloudflare != undefined
+			.col-sm-12
+				h2 Cloudflare
+
+			.col-sm-6.col-lg-4.cloudflare
+				h3 Pageviews
+				table.table
+					thead
+					tbody
+						tr
+							td crawler
+							td=data.cloudflare.result.objs[0].trafficBreakdown.pageviews.crawler
+						tr
+							td regular
+							td=data.cloudflare.result.objs[0].trafficBreakdown.pageviews.regular
+						tr
+							td threat
+							td=data.cloudflare.result.objs[0].trafficBreakdown.pageviews.threat
+			.col-sm-6.col-lg-4.cloudflare
+				h3 Uniques
+				table.table
+					thead
+					tbody
+						tr
+							td crawler
+							td=data.cloudflare.result.objs[0].trafficBreakdown.uniques.crawler
+						tr
+							td regular
+							td=data.cloudflare.result.objs[0].trafficBreakdown.uniques.regular
+						tr
+							td threat
+							td=data.cloudflare.result.objs[0].trafficBreakdown.uniques.threat
+			.col-sm-6.col-lg-4.cloudflare
+				h3 Bandwidth Served
+				p 
+					strong Cloudflare: 
+					| #{data.cloudflare.result.objs[0].bandwidthServed.cloudflare}
+				p 
+					strong Hyprtxt: 
+					| #{data.cloudflare.result.objs[0].bandwidthServed.user}
+			.col-sm-6.col-lg-4.cloudflare
+				h3 Requests Served
+				p 
+					strong Cloudflare: 
+					| #{data.cloudflare.result.objs[0].requestsServed.cloudflare}
+				p 
+					strong Hyprtxt: 
+					| #{data.cloudflare.result.objs[0].requestsServed.user}
+
+
+			//- pre=JSON.stringify( data.cloudflare, null , 2 )
+
+
 		.col-sm-12
 			h2 Google Pagespeed
 		.col-sm-6.col-lg-4.pagespeed

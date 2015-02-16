@@ -31,6 +31,7 @@ var getNginxData = function ( callback ) {
 			// List all available domains
 			cloudflare.listDomains(function (err, domains) {
 				sites.cloudflare = domains;
+				console.log( domains );
 				var cloudflare_only = _.map( domains, 'display_name');
 				if (err) throw err;
 				_.each( sites, function ( site ) {

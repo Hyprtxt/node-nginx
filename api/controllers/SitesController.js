@@ -11,6 +11,7 @@ var child = require('child_process');
 var exec = child.exec;
 var spawn = child.spawn;
 var fs = require('fs');
+var cloudflare = require('cloudflare').createClient(sails.config.cloudflare);
 
 var preWrap = function( thing ) {
 	return '<pre>' + thing + '</pre>';
@@ -49,11 +50,18 @@ module.exports = {
 			view_data.port = getPort( data );
 			view_data.root = getRoot( data );
 			view_data.url = req.param('site');
-			console.log( view_data );
-			res.view('sitePanel', {
-				title: 'Site Manager',
-				data: view_data
-			});
+			cloudflare.domainStats( req.param('site'), '20', function ( err, response ) {
+				if (err) {
+					console.log( err );
+				}
+				else {
+					view_data.cloudflare = response;
+				}
+				res.view('sitePanel', {
+					title: 'Site Manager',
+					data: view_data
+				});
+			}); 
 		});
 	},
 
